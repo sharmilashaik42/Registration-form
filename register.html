@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - CLASSIC LAUNCH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f2ff, #fefefe);
+            min-height: 100vh;
+        }
+
+        .register-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-card::before {
+            content: "";
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #f5576c, #13c276);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .register-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .register-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+
+        .password-strength .progress {
+            height: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg register-card">
+                <div class="card-body p-5">
+
+                    <!-- HEADER -->
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <div style="width:80px;height:80px;border-radius:50%;
+                                background:linear-gradient(135deg,#667eea,#764ba2);
+                                display:flex;align-items:center;justify-content:center;margin:auto;">
+                                <i class="fa-solid fa-user-plus fa-2x text-white"></i>
+                            </div>
+                        </div>
+
+                        <!-- CHANGED TITLE HERE -->
+                        <h2 class="gradient-text">Classic Launch</h2>
+
+                        <p class="text-muted">
+                            <i class="fa-solid fa-rocket me-1"></i>
+                            Begin your journey with us
+                        </p>
+                    </div>
+
+                    <!-- FORM -->
+                    <form id="registerForm" novalidate>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fa-solid fa-user me-1 text-primary"></i>
+                                Full Name
+                            </label>
+                            <input type="text" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fa-solid fa-envelope me-1 text-danger"></i>
+                                Email
+                            </label>
+                            <input type="email" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fa-solid fa-lock me-1 text-success"></i>
+                                Password
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-lock"></i>
+                                </span>
+                                <input type="password" id="password" class="form-control" required minlength="6">
+                                <button class="btn btn-outline-secondary toggle" type="button">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <div class="password-strength mt-2">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" id="strengthBar"></div>
+                                </div>
+                                <small id="strengthText" class="text-muted">
+                                    <i class="fa-solid fa-chart-column me-1"></i>
+                                    Password strength
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fa-solid fa-lock me-1 text-info"></i>
+                                Confirm Password
+                            </label>
+                            <input type="password" id="confirm" class="form-control" required>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" required>
+                            <label class="form-check-label">
+                                <i class="fa-solid fa-file-contract me-1"></i>
+                                I agree to Terms & Privacy Policy
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn register-button w-100 py-2">
+                            <i class="fa-solid fa-rocket me-2"></i>
+                            Launch Account
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(function(){
+
+    $(".toggle").click(function(){
+        let input = $("#password");
+        let icon = $(this).find("i");
+        if(input.attr("type")==="password"){
+            input.attr("type","text");
+            icon.removeClass("fa-eye").addClass("fa-eye-slash");
+        } else {
+            input.attr("type","password");
+            icon.removeClass("fa-eye-slash").addClass("fa-eye");
+        }
+    });
+
+    $("#password").on("input", function(){
+        let val = this.value;
+        let strength = 0;
+        if(val.length>=6) strength++;
+        if(/[A-Z]/.test(val)) strength++;
+        if(/[0-9]/.test(val)) strength++;
+        if(/[^A-Za-z0-9]/.test(val)) strength++;
+
+        $("#strengthBar").css("width", (strength*25)+"%");
+        let text = ["Very Weak","Weak","Good","Strong"];
+        $("#strengthText").html(
+            `<i class="fa-solid fa-chart-column me-1"></i> ${text[strength-1] || "Very Weak"}`
+        );
+    });
+
+    $("#registerForm").submit(function(e){
+        e.preventDefault();
+        alert("Registration Successful (Frontend Demo)");
+    });
+
+});
+</script>
+
+</body>
+</html>
